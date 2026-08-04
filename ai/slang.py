@@ -1,11 +1,15 @@
 """
-Loads Gen Z slang dictionary
-and expands slang before
-sentiment analysis.
+Gen Z Slang Processor
+---------------------
+
+Loads the slang dictionary and
+expands Gen Z slang while
+preserving metadata for the UI.
 """
 
 import json
 from pathlib import Path
+
 
 ROOT = Path(__file__).resolve().parent.parent
 SLANG_FILE = ROOT / "data" / "slang.json"
@@ -16,14 +20,13 @@ class SlangProcessor:
     def __init__(self):
 
         with open(SLANG_FILE, "r", encoding="utf-8") as file:
-
-            self.slang = json.load(file)
+            self.dictionary = json.load(file)
 
     def expand(self, text: str):
 
         words = text.split()
 
-        expanded_words = []
+        expanded = []
 
         detected = []
 
@@ -31,26 +34,33 @@ class SlangProcessor:
 
             clean = word.lower().strip(".,!?;:\"'()[]{}")
 
-            if clean in self.slang:
+            if clean in self.dictionary:
 
-                replacement = self.slang[clean]["replacement"]
+                info = self.dictionary[clean]
 
-                expanded_words.append(replacement)
+                expanded.append(info["replacement"])
 
                 detected.append({
+
                     "original": word,
-                    "replacement": replacement
+
+                    "replacement": info["replacement"],
+
+                    "meaning": info["meaning"],
+
+                    "category": info["category"]
+
                 })
 
             else:
 
-                expanded_words.append(word)
+                expanded.append(word)
 
         return {
 
-            "expanded_text": " ".join(expanded_words),
+            "expanded_text": " ".join(expanded),
 
-            "slang_detected": detected
+            "detected": detected
 
         }
 
@@ -62,23 +72,30 @@ if __name__ == "__main__":
 
     while True:
 
-        text = input("\nEnter Text: ")
+        text = input("\nText: ")
 
         if text.lower() == "exit":
             break
 
         result = processor.expand(text)
 
-        print("\nExpanded Text:\n")
+        print("\nExpanded:\n")
 
         print(result["expanded_text"])
 
-        print("\nDetected Slang:\n")
+        print("\nDetected:\n")
 
-        for item in result["slang_detected"]:
+        if not result["detected"]:
 
-            print(
-                f"{item['original']}  →  {item['replacement']}"
-            )
+            print("None")
 
-        print()
+        else:
+
+            for item in result["detected"]:
+
+                print(f"""
+Original    : {item['original']}
+Replacement : {item['replacement']}
+Meaning     : {item['meaning']}
+Category    : {item['category']}
+""")

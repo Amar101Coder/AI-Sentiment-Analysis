@@ -1,0 +1,31 @@
+{
+    "goated": {
+        "replacement": "excellent",
+        "meaning": "Greatest Of All Time",
+        "category": "compliment"
+    },
+
+    "fr": {
+        "replacement": "for real",
+        "meaning": "Used to emphasize truth",
+        "category": "abbreviation"
+    },
+
+    "ngl": {
+        "replacement": "not gonna lie",
+        "meaning": "Introducing an honest opinion",
+        "category": "abbreviation"
+    },
+
+    "rizz": {
+        "replacement": "charisma",
+        "meaning": "Charm or flirting ability",
+        "category": "slang"
+    },
+
+    "mid": {
+        "replacement": "average",
+        "meaning": "Not impressive",
+        "category": "opinion"
+    }
+}
