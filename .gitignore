@@ -228,3 +228,5 @@ data/*.arrow
 # OS files
 Thumbs.db
 .DS_Store
+# Generated data
+data/history.json
