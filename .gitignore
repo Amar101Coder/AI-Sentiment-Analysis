@@ -216,3 +216,15 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# AI models & datasets
+models/
+data/*.csv
+data/*.parquet
+data/*.arrow
+
+# Hugging Face cache (optional)
+.cache/huggingface/
+
+# OS files
+Thumbs.db
+.DS_Store
